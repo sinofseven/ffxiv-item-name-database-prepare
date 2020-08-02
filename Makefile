@@ -1,7 +1,11 @@
 SHELL = /usr/bin/env bash -xeuo pipefail
 
-stack_name:=fukuoka-de-long-bot-prepare
+stack_name:=ffxiv-item-name-database-prepare
 
+describe:
+	poetry run aws cloudformation describe-stacks \
+		--stack-name $(stack_name) \
+		--query Stacks[0].Outputs
 
 deploy:
 	poetry run sam deploy \
@@ -20,11 +24,9 @@ destroy:
 create-sam-deploy-user-access-key:
 	poetry run python scripts/create_access_key.py $(stack_name) SAMDeployUser
 
-create-ssm-deploy-user-access-key:
-	poetry run python scripts/create_access_key.py $(stack_name) SSMDeployUser
 
 .PHONY: \
+	describe \
 	deploy \
 	destroy \
-	create-sam-deploy-user-access-key \
-	create-ssm-deploy-user-access-key
+	create-sam-deploy-user-access-key

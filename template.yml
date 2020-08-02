@@ -1,15 +1,11 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: lambda-runtime-tweeter-prepare
+Description: ffxiv-item-name-database-prepare
 
 Parameters:
   SAMDeployUserName:
     Type: String
-    Default: fukuoka-de-longi-bot-sam-deploy-user
-
-  SSMDeployUserName:
-    Type: String
-    Default: fukuoka-de-longi-bot-ssm-deploy-user
+    Default: sam-deploy-user
 
 Resources:
   SAMDeployUser:
@@ -27,23 +23,6 @@ Resources:
                 Action:
                   - cloudformation:*
                   - iam:PassRole
-                Resource:
-                  - "*"
-
-  SSMDeployUser:
-    Type: AWS::IAM::User
-    Properties:
-      UserName: !Ref SSMDeployUserName
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSSMFullAccess
-      Policies:
-        - PolicyName: KMSAdminPolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - kms:*
                 Resource:
                   - "*"
 
